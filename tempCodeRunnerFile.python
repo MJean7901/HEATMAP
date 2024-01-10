@@ -1,0 +1,67 @@
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+
+# Define the model in the form of a function
+def model(y, t, gamma, lambda_, beta, mu, alpha, tau, delta):
+    S1, Sg1, E1, I1, R1, S2, Sg2, E2, I2, R2 = y
+
+    dS1_dt = -gamma * S1 + tau * S2 - tau * S1 + lambda_ * Sg1
+    dSg1_dt = gamma * S1 + tau * Sg2 - mu * E1 + tau * Sg1 - beta * Sg1 * I1 / (S1 + Sg1 + E1 + I1 + R1) - lambda_ * Sg1
+    dE1_dt = beta * Sg1 * I1 / (S1 + Sg1 + E1 + I1 + R1) + tau * E2 - (alpha + tau) * E1
+    dI1_dt = alpha * E1 + tau * I2 - (delta + tau) * I1
+    dR1_dt = delta * I1 + tau * (R2 - R1)
+
+    dS2_dt = -gamma * S2 + tau * (S1 - S2) + lambda_ * Sg2
+    dSg2_dt = gamma * S2 + tau * Sg2 - mu * E2 + tau * Sg2 - beta * Sg2 * I2 / (S1 + Sg1 + E1 + I1 + R1) - lambda_ * Sg2
+    dE2_dt = beta * Sg2 * I2 / (S1 + Sg1 + E1 + I1 + R1) + tau * E1 - (alpha + tau) * E2
+    dI2_dt = alpha * E2 + tau * I1 - (delta + tau) * I2
+    dR2_dt = delta * I2 + tau * (R1 - R2)
+
+    return [dS1_dt, dSg1_dt, dE1_dt, dI1_dt, dR1_dt, dS2_dt, dSg2_dt, dE2_dt, dI2_dt, dR2_dt]
+
+# Initial conditions
+S1_0 = 50
+Sg1_0 = 0
+E1_0 = 0
+I1_0 = 50
+R1_0 = 0
+S2_0 = 50
+Sg2_0 = 50
+E2_0 = 0
+I2_0 = 50
+R2_0 = 0
+y0 = [S1_0, Sg1_0, E1_0, I1_0, R1_0, S2_0, Sg2_0, E2_0, I2_0, R2_0]
+
+# Parameters
+gamma = 0.25
+lambda_ = 0.5
+beta = 2/14
+mu = 1-0.25
+alpha = 0.5
+tau = 0.25
+delta = 1.14
+
+# Time vector
+t = np.linspace(0, 100, 1000)
+
+# Solve the ODEs
+solution = odeint(model, y0, t, args=(gamma, lambda_, beta, mu, alpha, tau, delta))
+
+# Plotting
+plt.figure(figsize=(12, 8))
+plt.plot(t, solution[:, 0], label='S1')
+plt.plot(t, solution[:, 1], label='Sg1')
+plt.plot(t, solution[:, 2], label='E1')
+plt.plot(t, solution[:, 3], label='I1')
+plt.plot(t, solution[:, 4], label='R1')
+plt.plot(t, solution[:, 5], label='S2')
+plt.plot(t, solution[:, 6], label='Sg2')
+plt.plot(t, solution[:, 7], label='E2')
+plt.plot(t, solution[:, 8], label='I2')
+plt.plot(t, solution[:, 9], label='R2')
+plt.xlabel('Time')
+plt.ylabel('Population')
+plt.title('Epidemiological Model for Two Cities')
+plt.legend()
+plt.show()
