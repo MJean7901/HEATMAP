@@ -9,7 +9,25 @@ I0 = 0.25 *N
 R0 = 0
 S0 = N - (E0 - I0 - R0)
 
+gamma = 0.25 #go-out rate
+alpha = 0.25 #infection rate
+delta = 1./14 #recovery rate
 
+tmax = 360
+Nt = 160
+t= np.linspace(0,tmax, Nt+1)
+
+def derivative(X,t):
+        S, E, I, R =X
+        S_prime = (-gamma *S * I)/N
+        E_prime = ((gamma * S * I)/N) - alpha*E
+        I_prime = alpha*E - delta * I
+        R_prime = delta * I
+        return np.array([S_prime, E_prime, I_prime, R_prime])
+
+X0 = S0, E0, I0, R0
+res = integrate.odeint(derivative, X0, t)
+S, E, I, R = res.T
 
 max_infected = np.max(I)
 print (print(f"Maximum number of infected individuals: {max_infected}"))

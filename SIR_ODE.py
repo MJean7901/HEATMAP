@@ -6,7 +6,7 @@ N = 50.  # Total number of individuals, N
 I0, R0 = 20., 0  # Initial number of infected and recovered individuals
 S0 = N - I0 - R0  # Susceptible individuals to infection initially is deduced
 beta, gamma = 0.80, 0.1  # Contact rate and mean recovery rate
-tmax = 360  # A grid of time points (in days)
+tmax = 160  # A grid of time points (in days)
 Nt = 160
 t = np.linspace(0, tmax, Nt+1)
 
