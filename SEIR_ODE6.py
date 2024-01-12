@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
 # Parameters
-gamma = 0.50  # Go-out rate
+gamma = 0.25  # Go-out rate
 beta = 2./14  # Exposure rate
-mu = 0.25  # Rate of becoming susceptible again
-lambda_ = 0.5  # Rate of becoming immobile
+mu = 0.75  # Rate of becoming susceptible again
+lambda_ = 1.0 # Rate of becoming immobile
 alpha = 0.5  # Infection rate
-tau = 0.25  # Travel rate between cities
+tau = 0  # Travel rate between cities
 delta = 1./14  # Recovery rate
 
 # Total population in each city
@@ -16,10 +16,10 @@ N1 = 50
 N2 = 50
 
 # Initial number of infected and exposed individuals
-I1_0 = 13
-I2_0 =30
-E1_0 =13
-E2_0 = 13
+I1_0 = 0.25*N1
+I2_0 = 0.50 *N2
+E1_0 =0.50 *N1
+E2_0 = 0.50 * N2
 
 # Initial conditions
 S1_0 = N1 - I1_0 - E1_0
