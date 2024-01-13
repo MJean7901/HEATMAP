@@ -6,35 +6,30 @@ from matplotlib.colors import LinearSegmentedColormap, Normalize
 # Example Data
 data1 = {
     'Initial Inf in City2': ['50', '25', '0'],
-    '0': [44, 34, 23],
-    '25': [47, 44, 34],
+    '0': [44, 30, 20],
+    '25': [47, 44, 29],
     '50': [48, 45, 45]
 }
 
 data2 = {
     'Initial Inf in City2': ['50', '25', '0'],
-    '0': [41, 30, 18],
-    '25': [45, 42,30],
+    '0': [41, 34, 23],
+    '25': [45, 42,34],
     '50': [45, 43, 43]
 }
 
 data3 = {
     'Initial Inf in City2': ['50', '25', '0'],
-    '0': [41, 28, 16],
-    '25': [45, 32, 28],
-    '50': [45, 44, 32]
+    '0': [41, 37, 25],
+    '25': [45, 42, 37],
+    '50': [45, 44, 42]
 }
 data4 = {
+
     'Initial Inf in City2': ['50', '25', '0'],
-    '0': [38, 26, 15],
-    '25': [43, 30, 26],
-    '50': [44, 43, 29]
-}
-data5 = {
-    'Initial Inf in City2': ['50', '25', '0'],
-    '0': [35, 24, 12],
-    '25': [40, 28, 31],
-    '50': [43, 40, 27]
+    '0': [39, 42, 27],
+    '25': [43, 40, 42],
+    '50': [44, 43, 49]
 }
 
 # Create a custom colormap (yellow to dark red)
@@ -43,7 +38,7 @@ n_bins = 50
 cmap = LinearSegmentedColormap.from_list(name='Custom', colors=colors, N=n_bins)
 
 # Create subplots
-fig, axes = plt.subplots(1, 5, figsize=(25, 6))
+fig, axes = plt.subplots(1, 4, figsize=(25, 6))
 
 # Function to create heatmap for each dataset
 def create_heatmap(data, ax, title):
@@ -61,7 +56,7 @@ create_heatmap(data1, axes[0], '(0)')
 create_heatmap(data2, axes[1], '(25)')
 create_heatmap(data3, axes[2], '(50)')
 create_heatmap(data4, axes[3], '(75)')
-create_heatmap(data5, axes[4], '(100)')
+
 # Adjust layout
 plt.tight_layout()
 plt.show()
